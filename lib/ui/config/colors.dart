@@ -1,0 +1,41 @@
+import 'dart:ui';
+
+abstract interface class AppColors {
+  final Color lightIntensity = const Color(0xFFE5E5E5);
+  final Color lightIntensityTitle = const Color(0xFF000000);
+  final Color mediumIntensity = const Color(0xFFBDBDBD);
+  final Color mediumIntensityTitle = const Color(0xFF000000);
+  final Color highIntensity = const Color(0xFF757575);
+  final Color highIntensityTitle = const Color(0xFF000000);
+  final Color veryHighIntensity = const Color(0xFF212121);
+  final Color veryHighIntensityTitle = const Color(0xFFFFFFFF);
+  final Color childCareTag = const Color(0xFFE0F7FA);
+  final Color workplaceTag = const Color(0xFFE8F5E9);
+  final Color childCareTitle = const Color(0xFF00BFA5);
+  final Color primary600 = const Color(0xFF00897B);
+  final Color primary500 = const Color(0xFF009688);
+  final Color primary400 = const Color(0xFF26A69A);
+  final Color primary300 = const Color(0xFF4DB6AC);
+  final Color primary200 = const Color(0xFF80CBC4);
+  final Color primary100 = const Color(0xFFB2DFDB);
+  final Color neutral600 = const Color(0xFF757575);
+  final Color neutral500 = const Color(0xFF9E9E9E);
+  final Color neutral400 = const Color(0xFFBDBDBD);
+  final Color neutral300 = const Color(0xFFE0E0E0);
+  final Color neutral200 = const Color(0xFFEEEEEE);
+  final Color neutral100 = const Color(0xFFF5F5F5);
+  final Color black = const Color(0xFF000000);
+  final Color white = const Color(0xFFFFFFFF);
+  final Color secondary600 = const Color(0xFFC51162);
+  final Color secondary500 = const Color(0xFFD81B60);
+  final Color secondary400 = const Color(0xFFEC407A);
+  final Color secondary300 = const Color(0xFFF06292);
+  final Color secondary200 = const Color(0xFFF48FB1);
+  final Color secondary100 = const Color(0xFFF8BBD0);
+  final Color secondaryB600 = const Color(0xFFFFE3EE);
+  final Color secondaryB500 = const Color(0xFFFFD4E1);
+  final Color secondaryB400 = const Color(0xFFFFC1D7);
+  final Color secondaryB300 = const Color(0xFFFFA8C7);
+  final Color secondaryB200 = const Color(0xFFFF8EB4);
+  final Color secondaryB100 = const Color(0xFFFF80AB);
+}
