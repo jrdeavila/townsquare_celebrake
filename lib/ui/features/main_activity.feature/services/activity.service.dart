@@ -17,6 +17,12 @@ class ActivityModelService {
               id: e.id,
               title: e.title,
               place: e.place,
+              details: e.details.isNotEmpty
+                  ? e.details
+                      .split(" • ")
+                      .map((e) => getActivityDetailFromString(e))
+                      .toList()
+                  : [],
               availableSeats: int.parse(e.availableSeats),
               category: categoryModel
                   .firstWhere((element) => element.id == e.categoryId),

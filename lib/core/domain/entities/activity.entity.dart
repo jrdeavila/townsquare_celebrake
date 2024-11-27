@@ -9,6 +9,8 @@ class ActivityEntity extends Equatable {
   final String startTime; // Time in hours and minutes. Ex: 09:00
   final String availableSeats;
   final String duration; // Duration in hours and minutes. Ex: 02:30
+  final String
+      details; // Outdoor session • Light intensity | Outdoor session • Light intensity | Outdoor session • Light intensity
 
   const ActivityEntity({
     required this.id,
@@ -19,6 +21,7 @@ class ActivityEntity extends Equatable {
     required this.price,
     required this.availableSeats,
     required this.duration,
+    required this.details,
   });
 
   @override
@@ -30,6 +33,7 @@ class ActivityEntity extends Equatable {
         startTime,
         price,
         availableSeats,
-        duration
+        duration,
+        details,
       ];
 }

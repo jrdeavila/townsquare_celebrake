@@ -31,7 +31,9 @@ class MainActivityView extends StatelessWidget {
         child: Column(
           children: [
             const JoinTimerCard(),
+            const SizedBox(height: 16),
             const ActivitySearchBar(),
+            const SizedBox(height: 16),
             CategoryScrollableList(
               categories: categories,
               currentCategory: selectedCategory,
@@ -45,41 +47,65 @@ class MainActivityView extends StatelessWidget {
               ),
             if (!isLoading)
               Expanded(
-                child: Column(
+                child: Row(
                   children: [
-                    Row(
+                    Column(
                       children: [
-                        Text(
-                          Get.find<AppStrings>().todayMessage.tr,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.only(right: 3),
+                          decoration: BoxDecoration(
+                            color: Get.find<AppColors>().secondary300,
+                            shape: BoxShape.circle,
+                          ),
                         ),
-                        const SizedBox(width: 4),
-                        Text("/",
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Get.find<AppColors>().neutral500,
-                                    )),
-                        const SizedBox(width: 4),
-                        Text(
-                          Get.find<ActivityController>().currentDayOfWeek.tr,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Get.find<AppColors>().neutral500,
-                                  ),
+                        Expanded(
+                          child: CustomPaint(
+                            painter: DashedLinePainter(
+                              color: Get.find<AppColors>().neutral500,
+                            ),
+                            child: Container(
+                              width: 3,
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(width: 16),
                     Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: activityList.map((activity) {
-                            return ActivityCard(activity: activity);
-                          }).toList(),
-                        ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                Get.find<AppStrings>().todayMessage.tr,
+                                style: Theme.of(context).textTheme.displayLarge,
+                              ),
+                              const SizedBox(width: 4),
+                              Text("/",
+                                  style:
+                                      Theme.of(context).textTheme.labelLarge),
+                              const SizedBox(width: 4),
+                              Text(
+                                Get.find<ActivityController>()
+                                    .currentDayOfWeek
+                                    .tr,
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: activityList.map((activity) {
+                                  return ActivityCard(activity: activity);
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -89,6 +115,35 @@ class MainActivityView extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class DashedLinePainter extends CustomPainter {
+  final Color color;
+
+  DashedLinePainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1
+      ..strokeCap = StrokeCap.round;
+
+    final max = size.height;
+    const dashWidth = 5;
+    const dashSpace = 5;
+    double startY = 0;
+
+    while (startY < max) {
+      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashWidth), paint);
+      startY += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
 
@@ -110,31 +165,52 @@ class JoinTimerCard extends StatelessWidget {
             children: [
               Text(
                 Get.find<AppStrings>().joinTimerCardTitle.tr,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Get.find<AppColors>().black,
                     ),
               ),
               const SizedBox(height: 8),
               Text(
                 Get.find<AppStrings>().joinTimerCardSubtitle.tr,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Get.find<AppColors>().black,
+                    ),
               ),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () => throw UnimplementedError(),
-                    child: Text(
-                      Get.find<AppStrings>().joinTimerCardActionJoin.tr,
+              Theme(
+                data: Theme.of(context).copyWith(
+                  elevatedButtonTheme: ElevatedButtonThemeData(
+                      style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                      Get.find<AppColors>().black,
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () => throw UnimplementedError(),
-                    child: Text(
-                        Get.find<AppStrings>().joinTimerCardActionMyPoints.tr),
-                  ),
-                ],
+                    foregroundColor: WidgetStateProperty.all<Color>(
+                      Get.find<AppColors>().white,
+                    ),
+                    shape: WidgetStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  )),
+                ),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => throw UnimplementedError(),
+                      child: Text(
+                        Get.find<AppStrings>().joinTimerCardActionJoin.tr,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () => throw UnimplementedError(),
+                      child: Text(Get.find<AppStrings>()
+                          .joinTimerCardActionMyPoints
+                          .tr),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
@@ -186,7 +262,7 @@ class ProgressCircleTimer extends StatelessWidget {
             child: Text(
               value,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    color: Get.find<AppColors>().black,
                   ),
             ),
           ),
@@ -201,14 +277,10 @@ class ActivitySearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: Get.find<AppStrings>().activitySearchBarHint.tr,
-          suffixIcon: const Icon(FontAwesomeIcons.search),
-          border: InputBorder.none,
-        ),
+    return TextFormField(
+      decoration: InputDecoration(
+        hintText: Get.find<AppStrings>().activitySearchBarHint.tr,
+        suffixIcon: const Icon(FontAwesomeIcons.search),
       ),
     );
   }
@@ -286,7 +358,7 @@ class CategoryCard extends StatelessWidget {
       child: Center(
         child: Text(
           category.name,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Theme.of(context).textTheme.displayMedium?.copyWith(
                 color: Get.find<AppColors>().black,
               ),
         ),
@@ -304,6 +376,14 @@ class ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Get.find<AppColors>().neutral600,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Row(
         children: [
           Expanded(
@@ -313,28 +393,22 @@ class ActivityCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      activity.startTime.format(context),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Get.find<AppColors>().black,
-                          ),
+                      activity.formattedStartTime,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       "(${activity.formattedDuration})",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Get.find<AppColors>().neutral500,
-                          ),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Text(
                   activity.title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
+                const SizedBox(height: 4),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -344,13 +418,11 @@ class ActivityCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       activity.place,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Get.find<AppColors>().neutral500,
-                          ),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Row(
                   children: [
                     Icon(FontAwesomeIcons.user,
@@ -358,24 +430,44 @@ class ActivityCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       activity.formattedParticipants,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Get.find<AppColors>().neutral500,
-                          ),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
+                    const SizedBox(width: 8),
+                    ...activity.details.map((detail) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 3,
+                          horizontal: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color:
+                              getColorFromActivityDetail(detail)["background"],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          getStringFromActivityDetail(detail),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(
+                                color:
+                                    getColorFromActivityDetail(detail)["title"],
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      );
+                    }),
                   ],
                 )
               ],
             ),
           ),
-          const Spacer(),
           Column(
             children: [
               Text(
                 activity.formattedPrice,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Get.find<AppColors>().black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               ElevatedButton(

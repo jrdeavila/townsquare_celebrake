@@ -11,6 +11,7 @@ class FakeActivityRepository implements IActivityRepository {
       price: "5.0",
       duration: "01:00",
       startTime: "07:00",
+      details: "Outdoor session • Light intensity",
     ),
     const ActivityEntity(
       id: "2",
@@ -21,6 +22,7 @@ class FakeActivityRepository implements IActivityRepository {
       price: "10.0",
       duration: "02:00",
       startTime: "12:00",
+      details: "Outdoor session • Medium intensity",
     ),
     const ActivityEntity(
       id: "3",
@@ -31,6 +33,7 @@ class FakeActivityRepository implements IActivityRepository {
       price: "0.0",
       duration: "01:30",
       startTime: "15:00",
+      details: "Medium intensity",
     ),
     const ActivityEntity(
       id: "4",
@@ -41,6 +44,7 @@ class FakeActivityRepository implements IActivityRepository {
       price: "7.0",
       duration: "02:00",
       startTime: "18:00",
+      details: "Childcare included • High intensity",
     ),
     const ActivityEntity(
       id: "5",
@@ -51,6 +55,7 @@ class FakeActivityRepository implements IActivityRepository {
       price: "8.0",
       duration: "01:00",
       startTime: "16:30",
+      details: "Outdoor session • Light intensity",
     ),
     const ActivityEntity(
       id: "6",
@@ -61,6 +66,7 @@ class FakeActivityRepository implements IActivityRepository {
       price: "0.0",
       duration: "03:00",
       startTime: "11:00",
+      details: "Outdoor session • Light intensity",
     ),
   ];
 
