@@ -4,35 +4,66 @@ class FakeActivityRepository implements IActivityRepository {
   final List<ActivityEntity> fakeActivities = [
     const ActivityEntity(
       id: "1",
-      title: "Activity 1",
-      place: "Place 1",
-      availableSeats: "10",
-      categoryId: "1",
-      price: "10.0",
+      title: "Morning Yoga",
+      place: "Central Park",
+      availableSeats: "8",
+      categoryId: "1", // Sports
+      price: "5.0",
       duration: "01:00",
-      startTime: "09:00",
+      startTime: "07:00",
     ),
     const ActivityEntity(
       id: "2",
-      title: "Activity 2",
-      place: "Place 2",
-      availableSeats: "20",
-      categoryId: "2",
-      price: "20.0",
+      title: "Cooking Workshop",
+      place: "Community Center",
+      availableSeats: "5",
+      categoryId: "2", // Food
+      price: "10.0",
       duration: "02:00",
-      startTime: "10:00",
+      startTime: "12:00",
     ),
     const ActivityEntity(
       id: "3",
-      title: "Activity 3",
-      place: "Place 3",
-      availableSeats: "30",
-      categoryId: "3",
-      price: "30.0",
+      title: "Kids Art Class",
+      place: "Art Studio",
+      availableSeats: "10",
+      categoryId: "3", // Kids
+      price: "0.0",
+      duration: "01:30",
+      startTime: "15:00",
+    ),
+    const ActivityEntity(
+      id: "4",
+      title: "Evening Football Match",
+      place: "Local Stadium",
+      availableSeats: "12",
+      categoryId: "1", // Sports
+      price: "7.0",
+      duration: "02:00",
+      startTime: "18:00",
+    ),
+    const ActivityEntity(
+      id: "5",
+      title: "Creative Writing Workshop",
+      place: "Library Hall",
+      availableSeats: "6",
+      categoryId: "4", // Creative
+      price: "8.0",
+      duration: "01:00",
+      startTime: "16:30",
+    ),
+    const ActivityEntity(
+      id: "6",
+      title: "Family Picnic",
+      place: "Riverside Park",
+      availableSeats: "15",
+      categoryId: "2", // Food
+      price: "0.0",
       duration: "03:00",
       startTime: "11:00",
     ),
   ];
+
   @override
   Future<List<ActivityEntity>> getActivities() {
     return Future.value(fakeActivities);

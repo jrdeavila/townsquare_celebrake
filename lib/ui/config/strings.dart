@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-
 class AppStrings {
   static AppStrings? _instance;
   static AppStrings getInstance() {
@@ -7,36 +5,45 @@ class AppStrings {
     return _instance!;
   }
 
-  final String appName = "TownSquare App".tr;
-  final String thisWeekMessage = "this_week_message".tr;
-  final String todayMessage = "today_message".tr;
-  final String homeBottomNavTitle = "home_bottom_nav_title".tr;
-  final String calendarBottomNavTitle = "calendar_bottom_nav_title".tr;
-  final String profileBottomNavTitle = "profile_bottom_nav_title".tr;
+  final String appName = "TownSquare App";
+  final String thisWeekMessage = "this_week_message";
+  final String todayMessage = "today_message";
+  final String homeBottomNavTitle = "home_bottom_nav_title";
+  final String calendarBottomNavTitle = "calendar_bottom_nav_title";
+  final String profileBottomNavTitle = "profile_bottom_nav_title";
 
   // Dates
-  final String today = "today".tr;
-  final String tomorrow = "tomorrow".tr;
-  final String yesterday = "yesterday".tr;
+  final String today = "today";
+  final String tomorrow = "tomorrow";
+  final String yesterday = "yesterday";
   // Days
-  final String mondaySmallLabel = "monday_small_label".tr;
-  final String tuesdaySmallLabel = "tuesday_small_label".tr;
-  final String wednesdaySmallLabel = "wednesday".tr;
-  final String thursdaySmallLabel = "thursday_small_label".tr;
-  final String fridaySmallLabel = "friday_small_label".tr;
-  final String saturdaySmallLabel = "saturday_small_label".tr;
-  final String sundaySmallLabel = "sunday_small_label".tr;
+  final String mondaySmallLabel = "monday_small_label";
+  final String tuesdaySmallLabel = "tuesday_small_label";
+  final String wednesdaySmallLabel = "wednesday";
+  final String thursdaySmallLabel = "thursday_small_label";
+  final String fridaySmallLabel = "friday_small_label";
+  final String saturdaySmallLabel = "saturday_small_label";
+  final String sundaySmallLabel = "sunday_small_label";
   // Months
-  final String januarySmallLabel = "january_small_label".tr;
-  final String februarySmallLabel = "february_small_label".tr;
-  final String marchSmallLabel = "march_small_label".tr;
-  final String aprilSmallLabel = "april_small_label".tr;
-  final String maySmallLabel = "may_small_label".tr;
-  final String juneSmallLabel = "june_small_label".tr;
-  final String julySmallLabel = "july_small_label".tr;
-  final String augustSmallLabel = "august_small_label".tr;
-  final String septemberSmallLabel = "september_small_label".tr;
-  final String octoberSmallLabel = "october_small_label".tr;
-  final String novemberSmallLabel = "november_small_label".tr;
-  final String decemberSmallLabel = "december_small_label".tr;
+  final String januarySmallLabel = "january_small_label";
+  final String februarySmallLabel = "february_small_label";
+  final String marchSmallLabel = "march_small_label";
+  final String aprilSmallLabel = "april_small_label";
+  final String maySmallLabel = "may_small_label";
+  final String juneSmallLabel = "june_small_label";
+  final String julySmallLabel = "july_small_label";
+  final String augustSmallLabel = "august_small_label";
+  final String septemberSmallLabel = "september_small_label";
+  final String octoberSmallLabel = "october_small_label";
+  final String novemberSmallLabel = "november_small_label";
+  final String decemberSmallLabel = "december_small_label";
+  // Activity Screen
+  final String joinTimerCardTitle = "join_timer_card_title";
+  final String joinTimerCardSubtitle = "join_timer_card_subtitle";
+  final String joinTimerCardActionJoin = "action_join";
+  final String joinTimerCardActionMyPoints = "action_my_points";
+  final String activitySearchBarHint = "activity_search_bar_hint";
+  final String spotsLeftLabel = "spots_left_label";
+  final String currencySymbol = "currency_symbol";
+  final String activityCardActionJoin = "activity_card_action_join";
 }

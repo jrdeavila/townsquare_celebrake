@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:townsquare/lib.dart';
 
 class ActivityModel extends Equatable {
@@ -22,6 +23,27 @@ class ActivityModel extends Equatable {
     required this.startTime,
     required this.category,
   });
+
+  String get formattedDuration {
+    if (duration.inHours == 0) {
+      return "${duration.inMinutes}m";
+    }
+    return "${duration.inHours}h ${duration.inMinutes.remainder(60)}m";
+  }
+
+  String get formattedParticipants {
+    if (availableSeats == 0) {
+      return "No seats available";
+    }
+    return "$availableSeats ${Get.find<AppStrings>().spotsLeftLabel.tr}";
+  }
+
+  String get formattedPrice {
+    if (price == 0) {
+      return "Free";
+    }
+    return "$price${Get.find<AppStrings>().currencySymbol.tr}";
+  }
 
   @override
   List<Object?> get props => [

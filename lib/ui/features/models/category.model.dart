@@ -17,6 +17,13 @@ class CategoryModel extends Equatable {
     );
   }
 
+  factory CategoryModel.defaultModel() {
+    return const CategoryModel(
+      id: "0",
+      name: "All",
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,

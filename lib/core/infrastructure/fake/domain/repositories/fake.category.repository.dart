@@ -4,15 +4,19 @@ class FakeCategoryRepository implements ICategoryRepository {
   final List<CategoryEntity> fakeCategories = [
     const CategoryEntity(
       id: "1",
-      name: "Category 1",
+      name: "Sports",
     ),
     const CategoryEntity(
       id: "2",
-      name: "Category 2",
+      name: "Food",
     ),
     const CategoryEntity(
       id: "3",
-      name: "Category 3",
+      name: "Kids",
+    ),
+    const CategoryEntity(
+      id: "4",
+      name: "Creative",
     ),
   ];
   @override

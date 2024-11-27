@@ -1,3 +1,4 @@
+import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:townsquare/lib.dart';
@@ -24,36 +25,68 @@ class MainActivityView extends StatelessWidget {
       final isLoading = Get.find<ActivityController>().isLoading;
       final activityList = Get.find<ActivityController>().activityList;
       final categories = Get.find<ActivityController>().categories;
-      return CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(
-            child: JoinTimerCard(),
-          ),
-          const SliverToBoxAdapter(
-            child: ActivitySearchBar(),
-          ),
-          SliverToBoxAdapter(
-            child: CategoryScrollableList(
+      final selectedCategory = Get.find<ActivityController>().selectedCategory;
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const JoinTimerCard(),
+            const ActivitySearchBar(),
+            CategoryScrollableList(
               categories: categories,
+              currentCategory: selectedCategory,
             ),
-          ),
-          if (isLoading)
-            const SliverToBoxAdapter(
-              child: Center(
-                child: CircularProgressIndicator(),
+            const SizedBox(height: 16),
+            if (isLoading)
+              const Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
-            ),
-          if (!isLoading)
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final activity = activityList[index];
-                  return ActivityCard(activity: activity);
-                },
-                childCount: activityList.length,
-              ),
-            ),
-        ],
+            if (!isLoading)
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          Get.find<AppStrings>().todayMessage.tr,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text("/",
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: Get.find<AppColors>().neutral500,
+                                    )),
+                        const SizedBox(width: 4),
+                        Text(
+                          Get.find<ActivityController>().currentDayOfWeek.tr,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Get.find<AppColors>().neutral500,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: activityList.map((activity) {
+                            return ActivityCard(activity: activity);
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+          ],
+        ),
       );
     });
   }
@@ -66,27 +99,96 @@ class JoinTimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: Column(
+      decoration: BoxDecoration(
+        color: Get.find<AppColors>().primary300,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
         children: [
-          const Text(
-            "Join Timer",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                Get.find<AppStrings>().joinTimerCardTitle.tr,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                Get.find<AppStrings>().joinTimerCardSubtitle.tr,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => throw UnimplementedError(),
+                    child: Text(
+                      Get.find<AppStrings>().joinTimerCardActionJoin.tr,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () => throw UnimplementedError(),
+                    child: Text(
+                        Get.find<AppStrings>().joinTimerCardActionMyPoints.tr),
+                  ),
+                ],
+              )
+            ],
+          ),
+          const Spacer(),
+          const ProgressCircleTimer(
+            progress: 0.5,
+            min: 0,
+            max: 100,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProgressCircleTimer extends StatelessWidget {
+  final double progress;
+  final double min;
+  final double max;
+
+  const ProgressCircleTimer(
+      {super.key,
+      required this.progress,
+      required this.min,
+      required this.max});
+
+  @override
+  Widget build(BuildContext context) {
+    final value = (progress * (max - min) + min).toInt().toString();
+    return SizedBox(
+      width: 100,
+      height: 100,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: CircularProgressIndicator(
+              value: progress,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Get.find<AppColors>().primary500),
+              backgroundColor: Get.find<AppColors>().white,
+              strokeWidth: 10,
+              color: Get.find<AppColors>().black,
+              strokeCap: StrokeCap.round,
+              strokeAlign: -0.9,
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
-            "Join a room and start a timer",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey,
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-          ),
-          const SizedBox(height: 8),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text("Join Timer"),
           ),
         ],
       ),
@@ -101,13 +203,11 @@ class ActivitySearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
-          hintText: "Search for activities",
-          prefixIcon: const Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          hintText: Get.find<AppStrings>().activitySearchBarHint.tr,
+          suffixIcon: const Icon(FontAwesomeIcons.search),
+          border: InputBorder.none,
         ),
       ),
     );
@@ -116,27 +216,36 @@ class ActivitySearchBar extends StatelessWidget {
 
 class CategoryScrollableList extends StatelessWidget {
   final List<CategoryModel> categories;
-  const CategoryScrollableList({super.key, required this.categories});
+  final CategoryModel currentCategory;
+  const CategoryScrollableList(
+      {super.key, required this.categories, required this.currentCategory});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      height: 100,
+    return SizedBox(
+      height: 60,
       child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8),
         scrollDirection: Axis.horizontal,
-        children: categories.map((category) {
-          return CategoryCard(category: category);
-        }).toList(),
+        children: [
+          const CategoryDefaultCard(isSelected: false),
+          CategoryCard(
+            category: CategoryModel.defaultModel(),
+            isSelected: currentCategory == CategoryModel.defaultModel(),
+          ),
+          ...categories.map((category) {
+            return Center(child: CategoryCard(category: category));
+          })
+        ],
       ),
     );
   }
 }
 
-class CategoryCard extends StatelessWidget {
-  final CategoryModel category;
+class CategoryDefaultCard extends StatelessWidget {
+  final bool isSelected;
 
-  const CategoryCard({super.key, required this.category});
+  const CategoryDefaultCard({super.key, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -144,11 +253,43 @@ class CategoryCard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 8),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: isSelected
+            ? Get.find<AppColors>().secondaryB500
+            : Get.find<AppColors>().secondaryB300,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: const Center(
+        child: Icon(FontAwesomeIcons.slidersH),
+      ),
+    );
+  }
+}
+
+class CategoryCard extends StatelessWidget {
+  final CategoryModel category;
+  final bool isSelected;
+
+  const CategoryCard(
+      {super.key, required this.category, this.isSelected = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: isSelected
+            ? Get.find<AppColors>().secondaryB500
+            : Get.find<AppColors>().secondaryB300,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
-        child: Text(category.name),
+        child: Text(
+          category.name,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Get.find<AppColors>().black,
+              ),
+        ),
       ),
     );
   }
@@ -163,12 +304,94 @@ class ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text(activity.title),
-          const SizedBox(height: 8),
-          const SizedBox(height: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      activity.startTime.format(context),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Get.find<AppColors>().black,
+                          ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "(${activity.formattedDuration})",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Get.find<AppColors>().neutral500,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  activity.title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.mapMarkerAlt,
+                        size: 12, color: Get.find<AppColors>().neutral500),
+                    const SizedBox(width: 4),
+                    Text(
+                      activity.place,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Get.find<AppColors>().neutral500,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(FontAwesomeIcons.user,
+                        size: 10, color: Get.find<AppColors>().neutral500),
+                    const SizedBox(width: 4),
+                    Text(
+                      activity.formattedParticipants,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Get.find<AppColors>().neutral500,
+                          ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          const Spacer(),
+          Column(
+            children: [
+              Text(
+                activity.formattedPrice,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Get.find<AppColors>().black,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () => throw UnimplementedError(),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 20,
+                  ),
+                ),
+                child: Text(
+                  Get.find<AppStrings>().activityCardActionJoin.tr,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

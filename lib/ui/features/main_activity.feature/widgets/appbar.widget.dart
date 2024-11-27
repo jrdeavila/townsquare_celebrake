@@ -9,17 +9,21 @@ class ActivityAppBar extends StatelessWidget implements PreferredSize {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(top: kToolbarHeight, left: 20, right: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(Get.find<ActivityController>().currentDateString,
-                  style: Theme.of(context).textTheme.bodySmall),
-              Text(Get.find<AppStrings>().thisWeekMessage,
-                  style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                Get.find<ActivityController>().currentDateString,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Text(Get.find<AppStrings>().thisWeekMessage.tr,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      )),
             ],
           ),
           const Spacer(),

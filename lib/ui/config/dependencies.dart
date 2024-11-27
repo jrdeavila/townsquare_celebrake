@@ -30,7 +30,6 @@
 library;
 
 import 'package:get/get.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:townsquare/lib.dart';
 
 void configureDependencies() async {
@@ -54,8 +53,9 @@ void configureDependencies() async {
         Get.find<IFetchDomainCategoryEntityUseCase>(),
       ));
   // INTL
-  await initializeDateFormatting("es");
+  // await initializeDateFormatting("es");
   // Controllers
+  Get.lazyPut<AppTranslations>(() => AppTranslations());
   Get.lazyPut<AppColors>(() => AppColors.getInstance());
   Get.lazyPut<AppStrings>(() => AppStrings.getInstance());
   Get.put<ThemeController>(ThemeController());

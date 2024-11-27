@@ -41,6 +41,37 @@ class MyApp extends StatelessWidget {
               color: Get.find<AppColors>().white,
               elevation: 10,
             ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(
+                  Get.find<AppColors>().black,
+                ),
+                foregroundColor: WidgetStateProperty.all(
+                  Get.find<AppColors>().white,
+                ),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                padding: WidgetStateProperty.all(
+                  const EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 10,
+                  ),
+                ),
+              ),
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Get.find<AppColors>().neutral500,
+                  ),
+            ),
           ),
           darkTheme: ThemeData(
             fontFamily: "SF Pro Display",
@@ -50,8 +81,11 @@ class MyApp extends StatelessWidget {
               color: Get.find<AppColors>().black,
             ),
           ),
+          translations: Get.find<AppTranslations>(),
           getPages: MainRoutes.routes,
           initialRoute: MainRoutes.defaultHomeRoute,
+          locale: Get.find<LocaleController>().locale,
+          initialBinding: MainBinding(),
         ));
   }
 }

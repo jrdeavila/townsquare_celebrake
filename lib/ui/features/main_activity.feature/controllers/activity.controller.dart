@@ -5,10 +5,15 @@ class ActivityController extends GetxController {
   final RxBool _isLoading = true.obs;
   final RxList<ActivityModel> _activityList = <ActivityModel>[].obs;
   final RxList<CategoryModel> _categories = <CategoryModel>[].obs;
+  final Rx<CategoryModel> _selectedCategory =
+      Rx<CategoryModel>(CategoryModel.defaultModel());
   String get currentDateString => formattedDateToActivity(DateTime.now());
   bool get isLoading => _isLoading.value;
   List<ActivityModel> get activityList => _activityList;
   List<CategoryModel> get categories => _categories;
+  CategoryModel get selectedCategory => _selectedCategory.value;
+
+  String get currentDayOfWeek => dayOfWeek(DateTime.now());
 
   @override
   void onInit() {
@@ -48,10 +53,10 @@ class ActivityController extends GetxController {
 
 // Tues, 12 Jan
 String formattedDateToActivity(DateTime date) {
-  return "${_dayOfWeek(date)}, ${date.day} ${_month(date)}";
+  return "${dayOfWeek(date).tr}, ${date.day} ${month(date).tr}";
 }
 
-String _dayOfWeek(DateTime date) {
+String dayOfWeek(DateTime date) {
   switch (date.weekday) {
     case 1:
       return Get.find<AppStrings>().mondaySmallLabel;
@@ -72,7 +77,7 @@ String _dayOfWeek(DateTime date) {
   }
 }
 
-String _month(DateTime date) {
+String month(DateTime date) {
   switch (date.month) {
     case 1:
       return Get.find<AppStrings>().januarySmallLabel;
