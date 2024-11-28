@@ -64,7 +64,7 @@ class AppColors {
   final Color lightIntensity = const Color(0xFFD5F1FF);
   final Color lightIntensityTitle = const Color(0xFF65B5DB);
   final Color mediumIntensity = const Color(0xFFF3E8FF);
-  final Color mediumIntensityTitle = const Color(0xFFF3E8FF);
+  final Color mediumIntensityTitle = const Color(0xFFC9A4F2);
   final Color highIntensity = const Color(0xFFFFEAD1);
   final Color highIntensityTitle = const Color(0xFFDC974F);
   final Color veryHighIntensity = const Color(0xFFFFE0E4);

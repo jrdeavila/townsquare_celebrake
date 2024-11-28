@@ -21,6 +21,10 @@ class ThemeController extends GetxController {
           color: Get.find<AppColors>().white,
           elevation: 10,
         ),
+        iconTheme: IconThemeData(
+          color: Get.find<AppColors>().black,
+          size: 24,
+        ),
         textTheme: TextTheme(
           headlineLarge: TextStyle(
             fontSize: 30,
@@ -154,6 +158,10 @@ class ThemeController extends GetxController {
         shadowColor: Get.find<AppColors>().black,
         bottomAppBarTheme: BottomAppBarTheme(
           color: Get.find<AppColors>().black,
+        ),
+        iconTheme: IconThemeData(
+          color: Get.find<AppColors>().white,
+          size: 24,
         ),
         textTheme: TextTheme(
           headlineLarge: TextStyle(

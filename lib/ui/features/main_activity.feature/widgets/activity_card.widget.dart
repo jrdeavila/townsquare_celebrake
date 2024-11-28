@@ -3,6 +3,100 @@ import 'package:get/get.dart';
 import 'package:townsquare/lib.dart';
 import 'package:awesome_icons/awesome_icons.dart';
 
+class ActivityScrollableList extends StatelessWidget {
+  const ActivityScrollableList({
+    super.key,
+    required this.activityList,
+  });
+
+  final List<ActivityModel> activityList;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const ActivityScrollableDecorator(),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            children: [
+              const TodayTargetLabel(),
+              const SizedBox(height: 16),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: activityList.map((activity) {
+                      return ActivityCard(activity: activity);
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class TodayTargetLabel extends StatelessWidget {
+  const TodayTargetLabel({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          Get.find<AppStrings>().todayMessage.tr,
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+        const SizedBox(width: 4),
+        Text("/", style: Theme.of(context).textTheme.labelLarge),
+        const SizedBox(width: 4),
+        Text(
+          Get.find<ActivityController>().currentDayOfWeek.tr,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+      ],
+    );
+  }
+}
+
+class ActivityScrollableDecorator extends StatelessWidget {
+  const ActivityScrollableDecorator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 10,
+          height: 10,
+          margin: const EdgeInsets.only(right: 3),
+          decoration: BoxDecoration(
+            color: Get.find<AppColors>().secondary300,
+            shape: BoxShape.circle,
+          ),
+        ),
+        Expanded(
+          child: CustomPaint(
+            painter: DashedLinePainter(
+              color: Get.find<AppColors>().neutral500,
+            ),
+            child: Container(
+              width: 3,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class ActivityCard extends StatelessWidget {
   final ActivityModel activity;
 
@@ -107,7 +201,7 @@ class ActivityCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: () => throw UnimplementedError(),
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     vertical: 20,

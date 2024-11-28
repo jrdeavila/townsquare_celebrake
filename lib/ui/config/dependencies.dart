@@ -55,6 +55,7 @@ void configureDependencies() async {
   // INTL
   // await initializeDateFormatting("es");
   // Controllers
+  Get.put<ResponsiveController>(ResponsiveController());
   Get.lazyPut<AppTranslations>(() => AppTranslations());
   Get.lazyPut<AppColors>(() => AppColors.getInstance());
   Get.lazyPut<AppStrings>(() => AppStrings.getInstance());

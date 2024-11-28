@@ -1,3 +1,5 @@
+import 'package:awesome_icons/awesome_icons.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:townsquare/lib.dart';
 
@@ -14,6 +16,43 @@ class ActivityController extends GetxController {
   CategoryModel get selectedCategory => _selectedCategory.value;
 
   String get currentDayOfWeek => dayOfWeek(DateTime.now());
+  List<ActivitySidebarItemModel> get sidebarItems => [
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarActivityLabel,
+          onTap: () {},
+          prefixIcon: const Icon(
+            FontAwesomeIcons.calendar,
+          ),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarLocationLabel,
+          onTap: () {},
+          prefixIcon: const Icon(FontAwesomeIcons.map),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarServicesLabel,
+          onTap: () {},
+          prefixIcon: const Icon(FontAwesomeIcons.star),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarCommunitiesLabel,
+          onTap: () {
+            _selectedCategory.value = CategoryModel.defaultModel();
+          },
+          prefixIcon: const Icon(FontAwesomeIcons.users),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarNotificationsLabel,
+          onTap: () {},
+          prefixIcon: const Icon(FontAwesomeIcons.bell),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarCreateLabel,
+          onTap: () {},
+          prefixIcon: const Icon(FontAwesomeIcons.plus),
+          isButton: true,
+        ),
+      ];
 
   @override
   void onInit() {

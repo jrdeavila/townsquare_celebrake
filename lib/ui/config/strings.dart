@@ -46,4 +46,18 @@ class AppStrings {
   final String spotsLeftLabel = "spots_left_label";
   final String currencySymbol = "currency_symbol";
   final String activityCardActionJoin = "activity_card_action_join";
+  final String activitySidebarActivityLabel = "activity_sidebar_activity_label";
+  final String activitySidebarCommunitiesLabel =
+      "activity_sidebar_communities_label";
+  final String activitySidebarLocationLabel = "activity_sidebar_location_label";
+  final String activitySidebarCreateLabel = "activity_sidebar_create_label";
+  final String activitySidebarNotificationsLabel =
+      "activity_sidebar_notifications_label";
+  final String activitySidebarServicesLabel = "activity_sidebar_services_label";
+  final String weeklyWorkshopCardButton = "weekly_workshop_card_button";
+  final String weeklyWorkshopCardTitle = "weekly_workshop_card_title";
+  final String weeklyWorkshopCardSubtitle = "weekly_workshop_card_subtitle";
+  final String popularEventsCardButton = "popular_events_card_button";
+  final String popularEventsCardTitle = "popular_events_card_title";
+  final String popularEventsCardSubtitle = "popular_events_card_subtitle";
 }
