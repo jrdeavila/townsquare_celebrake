@@ -68,6 +68,12 @@ flutter:
     - assets/img/popular_event_user_1.png
     - assets/img/popular_event_user_2.png
     - assets/img/popular_event_user_3.png
+    - assets/img/flags/colombia.png
+    - assets/img/flags/united-states.png
+    - assets/img/flags/germany.png
+    - assets/img/flags/italy.png
+    - assets/img/flags/french.png
+    - assets/img/flags/portugal.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

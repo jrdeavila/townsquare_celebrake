@@ -12,6 +12,14 @@ class AppStrings {
   final String calendarBottomNavTitle = "calendar_bottom_nav_title";
   final String profileBottomNavTitle = "profile_bottom_nav_title";
 
+  // Language titles
+  final String englishLocaleTitle = "english_locale_title";
+  final String spanishLocaleTitle = "spanish_locale_title";
+  final String frenchLocaleTitle = "french_locale_title";
+  final String germanLocaleTitle = "german_locale_title";
+  final String italianLocaleTitle = "italian_locale_title";
+  final String portugueseLocaleTitle = "portuguese_locale_title";
+
   // Dates
   final String today = "today";
   final String tomorrow = "tomorrow";
@@ -54,6 +62,7 @@ class AppStrings {
   final String activitySidebarNotificationsLabel =
       "activity_sidebar_notifications_label";
   final String activitySidebarServicesLabel = "activity_sidebar_services_label";
+  final String activitySidebarProfileLabel = "activity_sidebar_profile_label";
   final String weeklyWorkshopCardButton = "weekly_workshop_card_button";
   final String weeklyWorkshopCardTitle = "weekly_workshop_card_title";
   final String weeklyWorkshopCardSubtitle = "weekly_workshop_card_subtitle";

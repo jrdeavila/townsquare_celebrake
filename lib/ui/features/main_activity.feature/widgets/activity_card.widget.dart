@@ -109,7 +109,9 @@ class ActivityCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Get.find<AppColors>().neutral600,
+          color: Get.isDarkMode
+              ? Get.find<AppColors>().neutral600
+              : Get.find<AppColors>().white,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(10),

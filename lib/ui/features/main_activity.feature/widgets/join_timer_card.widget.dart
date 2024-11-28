@@ -16,6 +16,7 @@ class JoinTimerCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -73,10 +74,15 @@ class JoinTimerCard extends StatelessWidget {
               ],
             ),
           ),
-          const ProgressCircleTimer(
-            progress: 0.5,
-            min: 0,
-            max: 100,
+          const SizedBox(width: 10),
+          const Expanded(
+            child: Center(
+              child: ProgressCircleTimer(
+                progress: 0.5,
+                min: 0,
+                max: 100,
+              ),
+            ),
           ),
         ],
       ),
@@ -98,34 +104,43 @@ class ProgressCircleTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = (progress * (max - min) + min).toInt().toString();
-    return SizedBox(
-      width: 100,
-      height: 100,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: CircularProgressIndicator(
-              value: progress,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  Get.find<AppColors>().primary500),
-              backgroundColor: Get.find<AppColors>().white,
-              strokeWidth: 10,
-              color: Get.find<AppColors>().black,
-              strokeCap: StrokeCap.round,
-              strokeAlign: -0.9,
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              value,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    color: Get.find<AppColors>().black,
-                  ),
-            ),
-          ),
-        ],
+    return Container(
+      constraints: const BoxConstraints(
+        maxWidth: 100,
+        maxHeight: 100,
+        minHeight: 80,
+        minWidth: 80,
       ),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Transform.scale(
+          scale: constraints.maxWidth / 100,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: CircularProgressIndicator(
+                  value: progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Get.find<AppColors>().primary500),
+                  backgroundColor: Get.find<AppColors>().white,
+                  strokeWidth: 10,
+                  color: Get.find<AppColors>().black,
+                  strokeCap: StrokeCap.round,
+                  strokeAlign: -0.9,
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  value,
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                        color: Get.find<AppColors>().black,
+                      ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

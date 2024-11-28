@@ -52,6 +52,15 @@ class ActivityController extends GetxController {
           prefixIcon: const Icon(FontAwesomeIcons.plus),
           isButton: true,
         ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarProfileLabel,
+          onTap: () {},
+          prefixIcon: const CircleAvatar(
+            radius: 15,
+            backgroundImage: AssetImage('assets/img/profile.png'),
+          ),
+          suffixIcon: const Icon(FontAwesomeIcons.ellipsisV),
+        ),
       ];
 
   @override

@@ -102,9 +102,9 @@ class WebActivityPageView extends StatelessWidget {
               child: Column(
                 children: [
                   JoinTimerCard(),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   WeeklyWorkshopCard(),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   PopularEventsCard(),
                 ],
               ),
@@ -132,6 +132,7 @@ class PopularEventsCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Get.find<AppColors>().black,
+        borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
           image: const AssetImage("assets/img/popular_events.jpeg"),
           fit: BoxFit.cover,
@@ -316,6 +317,7 @@ class ActivitySidebarItem extends StatelessWidget {
                               : Get.find<AppColors>().white,
                           overflow: TextOverflow.ellipsis,
                         )),
+                const Spacer(),
                 if (suffixIcon != null) suffixIcon!,
               ],
             ),
@@ -342,11 +344,18 @@ class ActivitySidebar extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 100, maxHeight: 150),
             child: Center(
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Text("TWN", style: Theme.of(context).textTheme.headlineLarge),
-                Text("SQR",
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                          color: Get.find<AppColors>().primary600,
-                        )),
+                Text(
+                  "TWN",
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                        color: Get.find<AppColors>().white,
+                      ),
+                ),
+                Text(
+                  "SQR",
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                        color: Get.find<AppColors>().primary600,
+                      ),
+                ),
               ]),
             ),
           ),
@@ -364,7 +373,119 @@ class ActivitySidebar extends StatelessWidget {
                       ))
             ],
           )),
+          const SizedBox(height: 20),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LanguageSelector(),
+              SizedBox(width: 20),
+              ThemeSelector()
+            ],
+          ),
+          const SizedBox(height: 20),
         ],
+      ),
+    );
+  }
+}
+
+class ThemeSelector extends StatelessWidget {
+  const ThemeSelector({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.find<ThemeController>().changeTheme();
+      },
+      child: MouseRegion(
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Get.find<AppColors>().blackB,
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: Get.find<AppColors>().white, width: 4),
+          ),
+          child: Center(
+            child: Icon(
+              Get.find<ThemeController>().isDarkMode
+                  ? FontAwesomeIcons.sun
+                  : FontAwesomeIcons.moon,
+              color: Get.find<AppColors>().white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LanguageSelector extends StatefulWidget {
+  const LanguageSelector({super.key});
+
+  @override
+  State<LanguageSelector> createState() => _LanguageSelectorState();
+}
+
+class _LanguageSelectorState extends State<LanguageSelector> {
+  final List<AppLocale> _supportedLocales =
+      Get.find<LocaleController>().supportedLocales;
+  AppLocale _currentLocale =
+      Get.find<LocaleController>().supportedLocales.first;
+
+  void _showLanguageSelector(TapDownDetails details) {
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final Offset offset = renderBox.localToGlobal(details.globalPosition);
+    final List<PopupMenuEntry<AppLocale>> items = _supportedLocales
+        .map((locale) => PopupMenuItem<AppLocale>(
+              value: locale,
+              child: Row(
+                children: [
+                  Image.asset(
+                    locale.flagAsset,
+                    width: 30,
+                    height: 30,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(locale.title.tr),
+                ],
+              ),
+            ))
+        .toList();
+    showMenu<AppLocale>(
+      context: context,
+      position:
+          RelativeRect.fromLTRB(offset.dx, offset.dy, offset.dx, offset.dy),
+      items: items,
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          _currentLocale = value;
+          Get.updateLocale(Locale(value.languageCode, value.countryCode));
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: _showLanguageSelector,
+      child: MouseRegion(
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Get.find<AppColors>().blackB,
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: Get.find<AppColors>().white, width: 4),
+            image: DecorationImage(
+              image: AssetImage(_currentLocale.flagAsset),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => GetMaterialApp(
           title: Get.find<AppStrings>().appName,
-          themeMode: ThemeMode.dark,
+          themeMode: Get.find<ThemeController>().isDarkMode
+              ? ThemeMode.dark
+              : ThemeMode.light,
           debugShowCheckedModeBanner: false,
           theme: Get.find<ThemeController>().lightTheme,
           darkTheme: Get.find<ThemeController>().darkTheme,

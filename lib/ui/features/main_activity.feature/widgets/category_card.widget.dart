@@ -47,8 +47,9 @@ class CategoryDefaultCard extends StatelessWidget {
             : Get.find<AppColors>().secondaryB300,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Center(
-        child: Icon(FontAwesomeIcons.slidersH),
+      child: Center(
+        child:
+            Icon(FontAwesomeIcons.slidersH, color: Get.find<AppColors>().black),
       ),
     );
   }
