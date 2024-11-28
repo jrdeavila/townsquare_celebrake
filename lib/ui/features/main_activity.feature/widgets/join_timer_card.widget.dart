@@ -15,61 +15,64 @@ class JoinTimerCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                Get.find<AppStrings>().joinTimerCardTitle.tr,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Get.find<AppColors>().black,
-                    ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                Get.find<AppStrings>().joinTimerCardSubtitle.tr,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Get.find<AppColors>().black,
-                    ),
-              ),
-              const SizedBox(height: 8),
-              Theme(
-                data: Theme.of(context).copyWith(
-                  elevatedButtonTheme: ElevatedButtonThemeData(
-                      style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(
-                      Get.find<AppColors>().black,
-                    ),
-                    foregroundColor: WidgetStateProperty.all<Color>(
-                      Get.find<AppColors>().white,
-                    ),
-                    shape: WidgetStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  Get.find<AppStrings>().joinTimerCardTitle.tr,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Get.find<AppColors>().black,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  )),
                 ),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => throw UnimplementedError(),
-                      child: Text(
-                        Get.find<AppStrings>().joinTimerCardActionJoin.tr,
+                const SizedBox(height: 8),
+                Text(
+                  Get.find<AppStrings>().joinTimerCardSubtitle.tr,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Get.find<AppColors>().black,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    ElevatedButton(
-                      onPressed: () => throw UnimplementedError(),
-                      child: Text(Get.find<AppStrings>()
-                          .joinTimerCardActionMyPoints
-                          .tr),
-                    ),
-                  ],
                 ),
-              )
-            ],
+                const SizedBox(height: 8),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    elevatedButtonTheme: ElevatedButtonThemeData(
+                        style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        Get.find<AppColors>().black,
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Get.find<AppColors>().white,
+                      ),
+                      shape: WidgetStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    )),
+                  ),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => throw UnimplementedError(),
+                        child: Text(
+                          Get.find<AppStrings>().joinTimerCardActionJoin.tr,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () => throw UnimplementedError(),
+                        child: Text(Get.find<AppStrings>()
+                            .joinTimerCardActionMyPoints
+                            .tr),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-          const Spacer(),
           const ProgressCircleTimer(
             progress: 0.5,
             min: 0,
