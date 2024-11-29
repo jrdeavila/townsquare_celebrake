@@ -16,7 +16,7 @@ class JoinTimerCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -74,14 +74,11 @@ class JoinTimerCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 10),
           const Expanded(
-            child: Center(
-              child: ProgressCircleTimer(
-                progress: 0.5,
-                min: 0,
-                max: 100,
-              ),
+            child: ProgressCircleTimer(
+              progress: 0.5,
+              min: 0,
+              max: 100,
             ),
           ),
         ],
@@ -104,16 +101,13 @@ class ProgressCircleTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = (progress * (max - min) + min).toInt().toString();
-    return Container(
-      constraints: const BoxConstraints(
-        maxWidth: 100,
-        maxHeight: 100,
-        minHeight: 80,
-        minWidth: 80,
-      ),
+    return Center(
       child: LayoutBuilder(builder: (context, constraints) {
-        return Transform.scale(
-          scale: constraints.maxWidth / 100,
+        double size = constraints.biggest.shortestSide;
+        size = size > 100 ? 100 : size;
+        return Container(
+          width: size,
+          height: size,
           child: Stack(
             children: [
               Positioned.fill(
