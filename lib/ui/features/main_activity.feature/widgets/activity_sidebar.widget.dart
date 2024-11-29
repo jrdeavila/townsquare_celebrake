@@ -80,7 +80,7 @@ class ActivitySidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 300, maxWidth: 350),
+      width: Get.find<ResponsiveController>().isTablet ? 300 : 350,
       color: Get.find<AppColors>().black,
       child: Column(
         children: [

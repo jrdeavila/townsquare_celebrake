@@ -189,31 +189,32 @@ class ActivityCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                       const SizedBox(width: 8),
-                      ...activity.details.map((detail) {
-                        return Container(
-                          margin: const EdgeInsets.only(right: 4),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 3,
-                            horizontal: 7,
-                          ),
-                          decoration: BoxDecoration(
-                            color: getColorFromActivityDetail(
-                                detail)["background"],
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            getStringFromActivityDetail(detail),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                  color: getColorFromActivityDetail(
-                                      detail)["title"],
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        );
-                      }),
+                      if (!Get.find<ResponsiveController>().isMobileSM)
+                        ...activity.details.map((detail) {
+                          return Container(
+                            margin: const EdgeInsets.only(right: 4),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 3,
+                              horizontal: 7,
+                            ),
+                            decoration: BoxDecoration(
+                              color: getColorFromActivityDetail(
+                                  detail)["background"],
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              getStringFromActivityDetail(detail),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(
+                                    color: getColorFromActivityDetail(
+                                        detail)["title"],
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          );
+                        }),
                     ],
                   )
                 ],
@@ -228,12 +229,19 @@ class ActivityCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 20,
-                    ),
-                  ),
+                  style: Get.find<ResponsiveController>().isMobileMD
+                      ? ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 10,
+                          ),
+                        )
+                      : ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: 20,
+                          ),
+                        ),
                   child: Text(
                     Get.find<AppStrings>().activityCardActionJoin.tr,
                   ),
