@@ -24,12 +24,14 @@ class ThemeSelector extends StatelessWidget {
             border: Border.all(color: Get.find<AppColors>().white, width: 4),
           ),
           child: Center(
-            child: Icon(
-              Get.find<ThemeController>().isDarkMode
-                  ? FontAwesomeIcons.sun
-                  : FontAwesomeIcons.moon,
-              color: Get.find<AppColors>().white,
-            ),
+            child: Obx(() {
+              return Icon(
+                Get.find<ThemeController>().isDarkMode
+                    ? FontAwesomeIcons.sun
+                    : FontAwesomeIcons.moon,
+                color: Get.find<AppColors>().white,
+              );
+            }),
           ),
         ),
       ),

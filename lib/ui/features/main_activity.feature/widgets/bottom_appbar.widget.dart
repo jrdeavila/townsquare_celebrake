@@ -12,13 +12,16 @@ class ActivityBottomNavBar extends StatelessWidget {
         children: [
           ...Get.find<ActivityController>().bottomItems.map((e) {
             if (e.isButton) {
-              return Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Get.find<AppColors>().primary200,
-                  shape: BoxShape.circle,
+              return MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Get.find<AppColors>().primary200,
+                    shape: BoxShape.circle,
+                  ),
+                  child: e.prefixIcon,
                 ),
-                child: e.prefixIcon,
               );
             }
 

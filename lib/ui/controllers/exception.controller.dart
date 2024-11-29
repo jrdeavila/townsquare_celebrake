@@ -21,6 +21,7 @@ class ExceptionController extends GetxController {
       Get.snackbar(
         exception.title ?? 'Error',
         exception.message,
+        margin: const EdgeInsets.all(16),
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: _getBackgroundColor(exception.severity),
         colorText: _getTextColor(exception.severity),

@@ -30,6 +30,10 @@ class WeeklyWorkshopCard extends StatelessWidget {
                   )),
           const SizedBox(height: 10),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Get.find<AppColors>().white,
+              foregroundColor: Get.find<AppColors>().black,
+            ),
             onPressed: () {},
             child: Row(
               children: [
