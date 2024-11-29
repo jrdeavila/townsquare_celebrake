@@ -122,102 +122,113 @@ class ActivityCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      activity.formattedStartTime,
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      "(${activity.formattedDuration})",
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                  ],
-                ),
+                _buildTimeDuration(context),
                 const SizedBox(height: 8),
                 Text(
                   activity.title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(FontAwesomeIcons.mapMarkerAlt,
-                        size: 12, color: Get.find<AppColors>().neutral500),
-                    const SizedBox(width: 4),
-                    Text(
-                      activity.place,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                  ],
-                ),
+                _buildPlaceTarget(context),
                 const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Icon(FontAwesomeIcons.user,
-                        size: 10, color: Get.find<AppColors>().neutral500),
-                    const SizedBox(width: 4),
-                    Text(
-                      activity.formattedParticipants,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                    const SizedBox(width: 8),
-                    ...activity.details.map((detail) {
-                      return Container(
-                        margin: const EdgeInsets.only(right: 4),
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 3,
-                          horizontal: 7,
-                        ),
-                        decoration: BoxDecoration(
-                          color:
-                              getColorFromActivityDetail(detail)["background"],
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          getStringFromActivityDetail(detail),
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(
-                                color:
-                                    getColorFromActivityDetail(detail)["title"],
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                      );
-                    }),
-                  ],
-                )
+                _buildSpotsAndTags(context)
               ],
             ),
           ),
-          Column(
-            children: [
-              Text(
-                activity.formattedPrice,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 20,
-                  ),
-                ),
-                child: Text(
-                  Get.find<AppStrings>().activityCardActionJoin.tr,
-                ),
-              ),
-            ],
-          ),
+          _buildPriceJoinButton(context),
         ],
       ),
+    );
+  }
+
+  Column _buildPriceJoinButton(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          activity.formattedPrice,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 20,
+            ),
+          ),
+          child: Text(
+            Get.find<AppStrings>().activityCardActionJoin.tr,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildSpotsAndTags(BuildContext context) {
+    return Row(
+      children: [
+        Icon(FontAwesomeIcons.user,
+            size: 10, color: Get.find<AppColors>().neutral500),
+        const SizedBox(width: 4),
+        Text(
+          activity.formattedParticipants,
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+        const SizedBox(width: 8),
+        ...activity.details.map((detail) {
+          return Container(
+            margin: const EdgeInsets.only(right: 4),
+            padding: const EdgeInsets.symmetric(
+              vertical: 3,
+              horizontal: 7,
+            ),
+            decoration: BoxDecoration(
+              color: getColorFromActivityDetail(detail)["background"],
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              getStringFromActivityDetail(detail),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: getColorFromActivityDetail(detail)["title"],
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          );
+        }),
+      ],
+    );
+  }
+
+  Row _buildPlaceTarget(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(FontAwesomeIcons.mapMarkerAlt,
+            size: 12, color: Get.find<AppColors>().neutral500),
+        const SizedBox(width: 4),
+        Text(
+          activity.place,
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+      ],
+    );
+  }
+
+  Row _buildTimeDuration(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          activity.formattedStartTime,
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          "(${activity.formattedDuration})",
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+      ],
     );
   }
 }
