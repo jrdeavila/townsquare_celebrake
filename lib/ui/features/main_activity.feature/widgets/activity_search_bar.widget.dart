@@ -8,10 +8,28 @@ class ActivitySearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        hintText: Get.find<AppStrings>().activitySearchBarHint.tr,
-        suffixIcon: const Icon(FontAwesomeIcons.search),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Get.find<AppColors>().white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Get.find<AppColors>().black.withOpacity(0.15),
+            blurRadius: 12,
+            spreadRadius: 5,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: TextField(
+        onChanged: (value) {
+          Get.find<ActivityController>().onSearch(value);
+        },
+        decoration: InputDecoration(
+          hintText: Get.find<AppStrings>().activitySearchBarHint.tr,
+          suffixIcon: const Icon(FontAwesomeIcons.search),
+        ),
       ),
     );
   }

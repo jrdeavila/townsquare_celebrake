@@ -9,7 +9,7 @@ class ActivityScrollableList extends StatelessWidget {
     required this.activityList,
   });
 
-  final List<ActivityModel> activityList;
+  final List<ActivityJoinModel> activityList;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,9 @@ class ActivityScrollableList extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: activityList.map((activity) {
-                      return ActivityCard(activity: activity);
+                      return ActivityCard(
+                        activityJoin: activity,
+                      );
                     }).toList(),
                   ),
                 ),
@@ -99,15 +101,14 @@ class ActivityScrollableDecorator extends StatelessWidget {
 }
 
 class ActivityCard extends StatelessWidget {
-  final ActivityModel activity;
-
-  const ActivityCard({super.key, required this.activity});
+  final ActivityJoinModel activityJoin;
+  const ActivityCard({super.key, required this.activityJoin});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Get.find<ThemeController>().isDarkMode;
     return Hero(
-      tag: activity.id,
+      tag: activityJoin.activity.id,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.all(16),
@@ -149,19 +150,19 @@ class ActivityCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        activity.formattedStartTime,
+                        activityJoin.activity.formattedStartTime,
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        "(${activity.formattedDuration})",
+                        "(${activityJoin.activity.formattedDuration})",
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    activity.title,
+                    activityJoin.activity.title,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 4),
@@ -173,7 +174,7 @@ class ActivityCard extends StatelessWidget {
                           size: 12, color: Get.find<AppColors>().neutral500),
                       const SizedBox(width: 4),
                       Text(
-                        activity.place,
+                        activityJoin.activity.place,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],
@@ -185,12 +186,12 @@ class ActivityCard extends StatelessWidget {
                           size: 10, color: Get.find<AppColors>().neutral500),
                       const SizedBox(width: 4),
                       Text(
-                        activity.formattedParticipants,
+                        activityJoin.activity.formattedParticipants,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                       const SizedBox(width: 8),
                       if (!Get.find<ResponsiveController>().isMobileSM)
-                        ...activity.details.map((detail) {
+                        ...activityJoin.activity.details.map((detail) {
                           return Container(
                             margin: const EdgeInsets.only(right: 4),
                             padding: const EdgeInsets.symmetric(
@@ -223,29 +224,61 @@ class ActivityCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  activity.formattedPrice,
+                  activityJoin.activity.formattedPrice,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: Get.find<ResponsiveController>().isMobileMD
-                      ? ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 10,
-                          ),
-                        )
-                      : ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 20,
-                            horizontal: 20,
-                          ),
+                activityJoin.isJoined
+                    ? ElevatedButton(
+                        onPressed: () {
+                          Get.find<ActivityController>()
+                              .onLeaveActivity(activityJoin.activity);
+                        },
+                        style: Get.find<ResponsiveController>().isMobileMD
+                            ? ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Get.find<AppColors>().neutral500,
+                                foregroundColor: Get.find<AppColors>().white,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 10,
+                                ),
+                              )
+                            : ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Get.find<AppColors>().neutral500,
+                                foregroundColor: Get.find<AppColors>().white,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 20,
+                                  horizontal: 20,
+                                ),
+                              ),
+                        child: Text(
+                          Get.find<AppStrings>().activityCardActionLeave.tr,
                         ),
-                  child: Text(
-                    Get.find<AppStrings>().activityCardActionJoin.tr,
-                  ),
-                ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {
+                          Get.find<ActivityController>()
+                              .onJoinActivity(activityJoin.activity);
+                        },
+                        style: Get.find<ResponsiveController>().isMobileMD
+                            ? ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 10,
+                                ),
+                              )
+                            : ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 20,
+                                  horizontal: 20,
+                                ),
+                              ),
+                        child: Text(
+                          Get.find<AppStrings>().activityCardActionJoin.tr,
+                        ),
+                      ),
               ],
             ),
           ],

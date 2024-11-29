@@ -3,19 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:townsquare/lib.dart';
 
+const int _kPointsPerSportActivity = 5;
+const int _kPointsMax = 100;
+
 class ActivityController extends GetxController {
   final RxBool _isLoading = true.obs;
   final RxList<ActivityModel> _activityList = <ActivityModel>[].obs;
+  final RxList<ActivityJoinModel> _filteredActivityList =
+      <ActivityJoinModel>[].obs;
   final RxList<CategoryModel> _categories = <CategoryModel>[].obs;
   final Rx<CategoryModel> _selectedCategory =
       Rx<CategoryModel>(CategoryModel.defaultModel());
+
   String get currentDateString => formattedDateToActivity(DateTime.now());
+
   bool get isLoading => _isLoading.value;
-  List<ActivityModel> get activityList => _activityList;
+
+  List<ActivityJoinModel> get activityList => _filteredActivityList;
+
   List<CategoryModel> get categories => _categories;
+
   CategoryModel get selectedCategory => _selectedCategory.value;
 
+  int get pointsPerSportActivity =>
+      _kPointsPerSportActivity *
+      _filteredActivityList
+          .where((element) =>
+              element.isJoined && element.activity.category.id == "1")
+          .length;
+  int get pointsMax => _kPointsMax;
+
   String get currentDayOfWeek => dayOfWeek(DateTime.now());
+
   List<ActivitySidebarItemModel> get sidebarItems => [
         ActivitySidebarItemModel(
           title: Get.find<AppStrings>().activitySidebarActivityLabel,
@@ -121,6 +140,31 @@ class ActivityController extends GetxController {
     super.onInit();
     _fetchActivityList();
     _fetchCategories();
+    ever(_selectedCategory, _onCategorySelected);
+    ever(_activityList, (_) {
+      _filteredActivityList.assignAll(_activityList.map((activity) {
+        return ActivityJoinModel(
+          activity: activity,
+          isJoined: _filteredActivityList.contains(activity),
+        );
+      }));
+    });
+  }
+
+  void _onCategorySelected(CategoryModel category) {
+    if (category.id == "0") {
+      _fetchActivityList();
+    } else {
+      final filteredList = _activityList.where((activity) {
+        return activity.category.id == category.id;
+      }).toList();
+      _filteredActivityList.assignAll(filteredList.map((activity) {
+        return ActivityJoinModel(
+          activity: activity,
+          isJoined: _filteredActivityList.contains(activity),
+        );
+      }));
+    }
   }
 
   void _fetchActivityList() async {
@@ -138,17 +182,67 @@ class ActivityController extends GetxController {
   }
 
   void onSearch(String query) {
-    final filteredList = _activityList.where((activity) {
-      return activity.title.toLowerCase().contains(query.toLowerCase());
-    }).toList();
-    _activityList.assignAll(filteredList);
+    if (query.isEmpty) {
+      _filteredActivityList.assignAll(_activityList.map((activity) {
+        return ActivityJoinModel(
+          activity: activity,
+          isJoined: _filteredActivityList.contains(activity),
+        );
+      }));
+    } else {
+      final filteredList = _activityList.where((activity) {
+        return activity.title.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+      _filteredActivityList.assignAll(filteredList.map((activity) {
+        return ActivityJoinModel(
+          activity: activity,
+          isJoined: _filteredActivityList.contains(activity),
+        );
+      }));
+    }
   }
 
   void onCategorySelected(CategoryModel category) {
-    final filteredList = _activityList.where((activity) {
-      return activity.category.id == category.id;
-    }).toList();
-    _activityList.assignAll(filteredList);
+    _selectedCategory.value = category;
+  }
+
+  void onJoinActivity(ActivityModel activity) {
+    final index = _filteredActivityList.indexWhere((element) {
+      return element.activity == activity;
+    });
+    _filteredActivityList.replaceRange(index, index + 1, [
+      ActivityJoinModel(
+        activity: activity,
+        isJoined: !_filteredActivityList[index].isJoined,
+      )
+    ]);
+  }
+
+  bool onJoinedActivity(ActivityModel activity) {
+    return _filteredActivityList
+        .firstWhere((element) => element.activity == activity,
+            orElse: () =>
+                ActivityJoinModel(activity: activity, isJoined: false))
+        .isJoined;
+  }
+
+  void onLeaveActivity(ActivityModel activity) {
+    final index = _filteredActivityList.indexWhere((element) {
+      return element.activity == activity;
+    });
+    _filteredActivityList.replaceRange(index, index + 1, [
+      ActivityJoinModel(
+        activity: activity,
+        isJoined: !_filteredActivityList[index].isJoined,
+      )
+    ]);
+  }
+
+  void showSportActivities() {
+    _selectedCategory.value = _categories.firstWhere(
+      (element) => element.id == "1",
+      orElse: () => CategoryModel.defaultModel(),
+    );
   }
 }
 

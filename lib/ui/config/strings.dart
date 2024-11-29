@@ -54,6 +54,7 @@ class AppStrings {
   final String spotsLeftLabel = "spots_left_label";
   final String currencySymbol = "currency_symbol";
   final String activityCardActionJoin = "activity_card_action_join";
+  final String activityCardActionLeave = "activity_card_action_leave";
   final String activitySidebarActivityLabel = "activity_sidebar_activity_label";
   final String activitySidebarCommunitiesLabel =
       "activity_sidebar_communities_label";

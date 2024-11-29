@@ -7,11 +7,12 @@ class MainActivityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<ActivityController>();
+    final categories = controller.categories;
     return Obx(() {
-      final isLoading = Get.find<ActivityController>().isLoading;
-      final activityList = Get.find<ActivityController>().activityList;
-      final categories = Get.find<ActivityController>().categories;
-      final selectedCategory = Get.find<ActivityController>().selectedCategory;
+      final isLoading = controller.isLoading;
+      final activityList = controller.activityList.toList();
+      final selectedCategory = controller.selectedCategory;
       // ================== Responsive UI ==================
       final isWeb = MediaQuery.of(context).size.width > 1400;
       final isMobile = MediaQuery.of(context).size.width <= 800;
@@ -45,7 +46,7 @@ class MainActivityPage extends StatelessWidget {
 class WebActivityPageView extends StatelessWidget {
   final List<CategoryModel> categories;
   final CategoryModel currentCategory;
-  final List<ActivityModel> activityList;
+  final List<ActivityJoinModel> activityList;
   final bool isLoading;
 
   const WebActivityPageView({
@@ -118,7 +119,7 @@ class WebActivityPageView extends StatelessWidget {
 class TabletActivityPageView extends StatelessWidget {
   final List<CategoryModel> categories;
   final CategoryModel currentCategory;
-  final List<ActivityModel> activityList;
+  final List<ActivityJoinModel> activityList;
   final bool isLoading;
 
   const TabletActivityPageView(
@@ -173,7 +174,7 @@ class TabletActivityPageView extends StatelessWidget {
 class MobileActivityPageView extends StatelessWidget {
   final List<CategoryModel> categories;
   final CategoryModel currentCategory;
-  final List<ActivityModel> activityList;
+  final List<ActivityJoinModel> activityList;
   final bool isLoading;
 
   const MobileActivityPageView({

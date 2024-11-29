@@ -100,7 +100,7 @@ class ThemeController extends GetxController {
           style: ButtonStyle(
             textStyle: WidgetStateProperty.all(
               const TextStyle(
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             backgroundColor: WidgetStateProperty.all(
@@ -149,6 +149,12 @@ class ThemeController extends GetxController {
             fontSize: 16,
             color: Get.find<AppColors>().neutral500,
           ),
+        ),
+        // Textfield font color
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Get.find<AppColors>().black,
+          selectionColor: Get.find<AppColors>().black.withOpacity(0.5),
+          selectionHandleColor: Get.find<AppColors>().black,
         ),
       );
 
@@ -238,8 +244,9 @@ class ThemeController extends GetxController {
           style: ButtonStyle(
             textStyle: WidgetStateProperty.all(
               const TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             backgroundColor: WidgetStateProperty.all(
@@ -288,6 +295,11 @@ class ThemeController extends GetxController {
             fontSize: 16,
             color: Get.find<AppColors>().neutral500,
           ),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Get.find<AppColors>().white,
+          selectionColor: Get.find<AppColors>().white.withOpacity(0.5),
+          selectionHandleColor: Get.find<AppColors>().white,
         ),
       );
 

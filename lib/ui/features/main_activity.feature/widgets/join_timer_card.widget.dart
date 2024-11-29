@@ -34,6 +34,7 @@ class JoinTimerCard extends StatelessWidget {
                         color: Get.find<AppColors>().black,
                         overflow: TextOverflow.ellipsis,
                       ),
+                  maxLines: 2,
                 ),
                 const SizedBox(height: 8),
                 Theme(
@@ -55,18 +56,37 @@ class JoinTimerCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      ElevatedButton(
-                        onPressed: () => throw UnimplementedError(),
-                        child: Text(
-                          Get.find<AppStrings>().joinTimerCardActionJoin.tr,
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Get.find<ActivityController>()
+                                .showSportActivities();
+                          },
+                          child: Text(
+                            Get.find<AppStrings>().joinTimerCardActionJoin.tr,
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Get.find<AppColors>().white,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton(
-                        onPressed: () => throw UnimplementedError(),
-                        child: Text(Get.find<AppStrings>()
-                            .joinTimerCardActionMyPoints
-                            .tr),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            Get.find<AppStrings>()
+                                .joinTimerCardActionMyPoints
+                                .tr,
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Get.find<AppColors>().white,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -74,12 +94,14 @@ class JoinTimerCard extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(
-            child: ProgressCircleTimer(
-              progress: 0.5,
-              min: 0,
-              max: 100,
-            ),
+          Expanded(
+            child: Obx(() {
+              return ProgressCircleTimer(
+                value: Get.find<ActivityController>().pointsPerSportActivity,
+                min: 0,
+                max: Get.find<ActivityController>().pointsMax,
+              );
+            }),
           ),
         ],
       ),
@@ -88,19 +110,16 @@ class JoinTimerCard extends StatelessWidget {
 }
 
 class ProgressCircleTimer extends StatelessWidget {
-  final double progress;
-  final double min;
-  final double max;
+  final int value;
+  final int min;
+  final int max;
 
   const ProgressCircleTimer(
-      {super.key,
-      required this.progress,
-      required this.min,
-      required this.max});
+      {super.key, required this.value, required this.min, required this.max});
 
   @override
   Widget build(BuildContext context) {
-    final value = (progress * (max - min) + min).toInt().toString();
+    final valueString = value.toString();
     return Center(
       child: LayoutBuilder(builder: (context, constraints) {
         double size = constraints.biggest.shortestSide;
@@ -112,7 +131,7 @@ class ProgressCircleTimer extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: CircularProgressIndicator(
-                  value: progress,
+                  value: value / max,
                   valueColor: AlwaysStoppedAnimation<Color>(
                       Get.find<AppColors>().primary500),
                   backgroundColor: Get.find<AppColors>().white,
@@ -125,7 +144,7 @@ class ProgressCircleTimer extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  value,
+                  valueString,
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         color: Get.find<AppColors>().black,
                       ),

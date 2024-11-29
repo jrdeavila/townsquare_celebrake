@@ -20,10 +20,12 @@ class CategoryScrollableList extends StatelessWidget {
           const CategoryDefaultCard(isSelected: false),
           CategoryCard(
             category: CategoryModel.defaultModel(),
-            isSelected: currentCategory == CategoryModel.defaultModel(),
+            selected: currentCategory == CategoryModel.defaultModel(),
           ),
           ...categories.map((category) {
-            return Center(child: CategoryCard(category: category));
+            return Center(
+                child: CategoryCard(
+                    category: category, selected: currentCategory == category));
           })
         ],
       ),
@@ -38,18 +40,23 @@ class CategoryDefaultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: isSelected
-            ? Get.find<AppColors>().secondaryB500
-            : Get.find<AppColors>().secondaryB300,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child:
-            Icon(FontAwesomeIcons.slidersH, color: Get.find<AppColors>().black),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        child: Container(
+          margin: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? Get.find<AppColors>().secondaryB500
+                : Get.find<AppColors>().secondaryB300,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: Icon(FontAwesomeIcons.slidersH,
+                color: Get.find<AppColors>().black),
+          ),
+        ),
       ),
     );
   }
@@ -57,28 +64,36 @@ class CategoryDefaultCard extends StatelessWidget {
 
 class CategoryCard extends StatelessWidget {
   final CategoryModel category;
-  final bool isSelected;
+  final bool selected;
 
   const CategoryCard(
-      {super.key, required this.category, this.isSelected = false});
+      {super.key, required this.category, required this.selected});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: isSelected
-            ? Get.find<AppColors>().secondaryB500
-            : Get.find<AppColors>().secondaryB300,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child: Text(
-          category.name,
-          style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: Get.find<AppColors>().black,
-              ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          Get.find<ActivityController>().onCategorySelected(category);
+        },
+        child: Container(
+          margin: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: selected
+                ? Get.find<AppColors>().secondaryB500
+                : Get.find<AppColors>().secondaryB300,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: Text(
+              category.name,
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    color: Get.find<AppColors>().black,
+                  ),
+            ),
+          ),
         ),
       ),
     );
