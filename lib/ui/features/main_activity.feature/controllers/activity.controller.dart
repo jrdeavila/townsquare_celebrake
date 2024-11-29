@@ -39,7 +39,7 @@ class ActivityController extends GetxController {
           onTap: () {
             _selectedCategory.value = CategoryModel.defaultModel();
           },
-          prefixIcon: const Icon(FontAwesomeIcons.users),
+          prefixIcon: const Icon(FontAwesomeIcons.userFriends),
         ),
         ActivitySidebarItemModel(
           title: Get.find<AppStrings>().activitySidebarNotificationsLabel,
@@ -60,6 +60,39 @@ class ActivityController extends GetxController {
             backgroundImage: AssetImage('assets/img/profile.png'),
           ),
           suffixIcon: const Icon(FontAwesomeIcons.ellipsisV),
+        ),
+      ];
+
+  List<ActivitySidebarItemModel> get bottomItems => [
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarActivityLabel,
+          onTap: () {},
+          prefixIcon: const Icon(
+            FontAwesomeIcons.calendar,
+          ),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarLocationLabel,
+          onTap: () {},
+          prefixIcon: const Icon(FontAwesomeIcons.map),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarCreateLabel,
+          onTap: () {},
+          prefixIcon: const Icon(FontAwesomeIcons.plus),
+          isButton: true,
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarServicesLabel,
+          onTap: () {},
+          prefixIcon: const Icon(FontAwesomeIcons.star),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarCommunitiesLabel,
+          onTap: () {
+            _selectedCategory.value = CategoryModel.defaultModel();
+          },
+          prefixIcon: const Icon(FontAwesomeIcons.userFriends),
         ),
       ];
 

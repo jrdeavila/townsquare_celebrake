@@ -44,5 +44,5 @@ class ActivityAppBar extends StatelessWidget implements PreferredSize {
   Widget get child => Container();
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 100);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 50);
 }
