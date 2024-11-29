@@ -98,23 +98,6 @@ class ActivityController extends GetxController {
 
   List<ActivitySidebarItemModel> get topItems => [
         ActivitySidebarItemModel(
-          title: "",
-          onTap: () {},
-          prefixIcon: LanguageSelector(
-            isSmall: true,
-          ),
-          isButton: true,
-        ),
-        ActivitySidebarItemModel(
-          title: "",
-          onTap: () {
-            _selectedCategory.value = CategoryModel.defaultModel();
-          },
-          prefixIcon: const ThemeSelector(
-            isSmall: true,
-          ),
-        ),
-        ActivitySidebarItemModel(
           title: Get.find<AppStrings>().activitySidebarNotificationsLabel,
           onTap: () {},
           prefixIcon: Icon(FontAwesomeIcons.bell,
