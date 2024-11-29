@@ -105,7 +105,7 @@ class ProgressCircleTimer extends StatelessWidget {
       child: LayoutBuilder(builder: (context, constraints) {
         double size = constraints.biggest.shortestSide;
         size = size > 100 ? 100 : size;
-        return Container(
+        return SizedBox(
           width: size,
           height: size,
           child: Stack(
