@@ -1,6 +1,11 @@
 export 'activity_card.widget.dart';
 export 'activity_search_bar.widget.dart';
+export 'activity_sidebar.widget.dart';
 export 'appbar.widget.dart';
 export 'bottom_appbar.widget.dart';
 export 'category_card.widget.dart';
 export 'join_timer_card.widget.dart';
+export 'language_selector.widget.dart';
+export 'popular_events_card.widget.dart';
+export 'theme_selector.widget.dart';
+export 'weekly_work_shop_card.widget.dart';
