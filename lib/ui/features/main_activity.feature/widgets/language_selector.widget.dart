@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:townsquare/lib.dart';
 
 class LanguageSelector extends StatefulWidget {
-  const LanguageSelector({super.key});
+  final bool isSmall;
+  const LanguageSelector({super.key, this.isSmall = false});
 
   @override
   State<LanguageSelector> createState() => _LanguageSelectorState();
@@ -51,12 +52,13 @@ class _LanguageSelectorState extends State<LanguageSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final size = widget.isSmall ? 40.0 : 50.0;
     return GestureDetector(
       onTapDown: _showLanguageSelector,
       child: MouseRegion(
         child: Container(
-          width: 50,
-          height: 50,
+          width: size,
+          height: size,
           decoration: BoxDecoration(
             color: Get.find<AppColors>().blackB,
             borderRadius: BorderRadius.circular(30),

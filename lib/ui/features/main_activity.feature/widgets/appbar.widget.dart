@@ -11,7 +11,7 @@ class ActivityAppBar extends StatelessWidget implements PreferredSize {
     return Container(
       padding: const EdgeInsets.only(top: kToolbarHeight, left: 20, right: 20),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,13 +27,17 @@ class ActivityAppBar extends StatelessWidget implements PreferredSize {
             ],
           ),
           const Spacer(),
-          IconButton(
-            icon: const Icon(FontAwesomeIcons.bell, size: 30),
-            onPressed: () => throw UnimplementedError(),
-          ),
-          const SizedBox(width: 10),
-          const CircleAvatar(
-            backgroundImage: AssetImage("assets/img/profile.png"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ...Get.find<ActivityController>().topItems.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: item.prefixIcon!,
+                );
+              }),
+            ],
           ),
         ],
       ),

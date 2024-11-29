@@ -4,18 +4,20 @@ import 'package:get/get.dart';
 import 'package:townsquare/lib.dart';
 
 class ThemeSelector extends StatelessWidget {
-  const ThemeSelector({super.key});
+  final bool isSmall;
+  const ThemeSelector({super.key, this.isSmall = false});
 
   @override
   Widget build(BuildContext context) {
+    final size = isSmall ? 40.0 : 50.0;
     return GestureDetector(
       onTap: () {
         Get.find<ThemeController>().changeTheme();
       },
       child: MouseRegion(
         child: Container(
-          width: 50,
-          height: 50,
+          width: size,
+          height: size,
           decoration: BoxDecoration(
             color: Get.find<AppColors>().blackB,
             borderRadius: BorderRadius.circular(30),

@@ -96,6 +96,43 @@ class ActivityController extends GetxController {
         ),
       ];
 
+  List<ActivitySidebarItemModel> get topItems => [
+        ActivitySidebarItemModel(
+          title: "",
+          onTap: () {},
+          prefixIcon: LanguageSelector(
+            isSmall: true,
+          ),
+          isButton: true,
+        ),
+        ActivitySidebarItemModel(
+          title: "",
+          onTap: () {
+            _selectedCategory.value = CategoryModel.defaultModel();
+          },
+          prefixIcon: const ThemeSelector(
+            isSmall: true,
+          ),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarNotificationsLabel,
+          onTap: () {},
+          prefixIcon: Icon(FontAwesomeIcons.bell,
+              size: 30.0,
+              color: Get.find<ThemeController>().isDarkMode
+                  ? Get.find<AppColors>().white
+                  : Get.find<AppColors>().black),
+        ),
+        ActivitySidebarItemModel(
+          title: Get.find<AppStrings>().activitySidebarProfileLabel,
+          onTap: () {},
+          prefixIcon: const CircleAvatar(
+            backgroundImage: AssetImage('assets/img/profile.png'),
+          ),
+          suffixIcon: const Icon(FontAwesomeIcons.ellipsisV),
+        ),
+      ];
+
   @override
   void onInit() {
     super.onInit();
